@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+
+import Header from "./Header/Header";
+import Login from "./Login-Form/Login";
+import Signin from "./Login-Form/Signin";
+
+import ForgotPassword from "./Login-Form/ForgotPassword";
+import ApplayOut from "./pages/AppLayOut";
+import Dashboard from "./Dashboard/Dashboard";
+import ManageCustomer from "./Customers/ManageCustomer";
+import ManageSuppliers from "./Suppliers/ManageSuppliers";
+import ManageItem from "./Item-Master/ManageItem";
+import Sales from "./Sales-Order/Sales";
+import ManagePurchase from "./Purchase-Order/ManagePurchase";
+import AddCustomer from "./AddCustomer";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" exact element={<Header />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/forgot" element={<ForgotPassword />} />        
+        </Routes>
+        <Routes >
+        <Route path="/" exact element={<ApplayOut />}>
+          <Route path="/" exact element={<Dashboard />} />
+          <Route path="customer" element={<ManageCustomer />} />
+          <Route path="suppliers" element={<ManageSuppliers />} />
+          <Route path="items" element={<ManageItem />} />
+          <Route path="sales" element={<Sales />} />
+          <Route path="purchaseorder" element={<ManagePurchase />} />
+          <Route path="addcustomer" element={<AddCustomer />} />
+        </Route>
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
