@@ -24,13 +24,12 @@ function App() {
       <GlobalStyle />
         <Routes>
           <Route path="/" exact element={<Header />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/forgot" element={<ForgotPassword />} />        
-        </Routes>
-        <Routes >
-        <Route path="/" exact element={<ApplayOut />}>
-          <Route path="/" exact element={<Dashboard />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signin" element={<Signin />} />
+          <Route path="forgot" element={<ForgotPassword />} />        
+
+        <Route exact element={<ApplayOut />}>
+          <Route path="dashboard" exact element={<Dashboard />} />
           <Route path="customer" element={<ManageCustomer />} />
           <Route path="suppliers" element={<ManageSuppliers />} />
           <Route path="items" element={<ManageItem />} />
