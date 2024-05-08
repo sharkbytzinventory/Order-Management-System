@@ -14,11 +14,14 @@ import ManageItem from "./Item-Master/ManageItem";
 import Sales from "./Sales-Order/Sales";
 import ManagePurchase from "./Purchase-Order/ManagePurchase";
 import AddCustomer from "./AddCustomer";
+import GlobalStyle from "./GlobalStyled";
+
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <GlobalStyle />
         <Routes>
           <Route path="/" exact element={<Header />} />
           <Route path="/login" element={<Login />} />

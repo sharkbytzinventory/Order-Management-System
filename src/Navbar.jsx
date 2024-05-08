@@ -11,12 +11,13 @@ function Navbar() {
             </span>
             Order Mangement
           </h2>
-          <nav>
-            <Link to="/login">Login</Link>
-          </nav>
         </Link>
+        <nav>
+          <Link to="/login">Login</Link>
+        </nav>
       </div>
     </>
   );
 }
+
 export default Navbar;

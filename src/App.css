@@ -9,29 +9,21 @@ body {
 .navbr {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  position: relative;
-  width: 100%;
-  z-index: 1000; /* Ensure navigation is on top of other content */
-  gap: 500px;
-}
-.navbr1 {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  justify-content: space-between; /* Centered vertically and space between horizontally */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   position: relative;
   width: 100%;
   z-index: 1000;
+  padding: 0.5rem 2rem; /* Added padding for better spacing */
 }
-.cadd {
-  gap: 20px;
+
+.navbr h2 {
+  margin: 0; /* Remove default margin */
 }
+
 nav {
   display: flex;
-  justify-content: space-between;
-  margin-right: 100px; /* Adjust margin as needed */
+  align-items: center; /* Centered vertically */
 }
 
 nav a {
@@ -105,12 +97,13 @@ nav a.active{
   text-decoration: none;
 }
 
- .login .form-switch a:hover {
+.login .form-switch a:hover {
   text-decoration: underline;
 }
 .login .switch a:hover {
   text-decoration: underline;
 }
+
 /* Additional Login Styles */
 .login {
   position: relative;
@@ -150,11 +143,11 @@ nav a.active{
 /* Media Queries */
 @media screen and (max-width: 500px) {
   .navbr {
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
   img {
     margin-top: 50px;
@@ -178,6 +171,7 @@ nav a.active{
     font-size:10px;
   }
 }
+
 .input-group {
   position: relative;
   margin-bottom: 1rem;
@@ -191,12 +185,12 @@ nav a.active{
   border-radius: 5px;
   padding: 0.5rem;
 }
+
 .error {
   position: absolute;
   color: red;
   font-size: 12px;
 }
-
 
 .icon {
   position: absolute;
