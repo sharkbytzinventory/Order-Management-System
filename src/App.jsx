@@ -16,28 +16,26 @@ import ManagePurchase from "./Purchase-Order/ManagePurchase";
 import AddCustomer from "./AddCustomer";
 import GlobalStyle from "./GlobalStyled";
 
-
 function App() {
   return (
     <>
       <BrowserRouter>
-      <GlobalStyle />
+        <GlobalStyle />
         <Routes>
           <Route path="/" exact element={<Header />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/forgot" element={<ForgotPassword />} />        
-        </Routes>
-        <Routes >
-        <Route path="/" exact element={<ApplayOut />}>
-          <Route path="/" exact element={<Dashboard />} />
-          <Route path="customer" element={<ManageCustomer />} />
-          <Route path="suppliers" element={<ManageSuppliers />} />
-          <Route path="items" element={<ManageItem />} />
-          <Route path="sales" element={<Sales />} />
-          <Route path="purchaseorder" element={<ManagePurchase />} />
-          <Route path="addcustomer" element={<AddCustomer />} />
-        </Route>
+          <Route path="/forgot" element={<ForgotPassword />} />
+
+          <Route path="/" exact element={<ApplayOut />}>
+            <Route path="/dashboard" exact element={<Dashboard />} />
+            <Route path="customer" element={<ManageCustomer />} />
+            <Route path="suppliers" element={<ManageSuppliers />} />
+            <Route path="items" element={<ManageItem />} />
+            <Route path="sales" element={<Sales />} />
+            <Route path="purchaseorder" element={<ManagePurchase />} />
+            <Route path="addcustomer" element={<AddCustomer />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
