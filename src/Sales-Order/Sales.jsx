@@ -3,9 +3,7 @@ import styled from "styled-components";
 function isDateString(dateString) {
   return !isNaN(Date.parse(dateString));
 }
-
-function ManagePurchase() {
-  const StyledDiv = styled.div`
+const StyledDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -89,6 +87,8 @@ function ManagePurchase() {
       background-color: #f2f2f2;
     }
   `;
+function ManagePurchase() {
+  
 
   function handleDateChange(event) {
     const selectedDate = event.target.value;

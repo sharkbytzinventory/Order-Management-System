@@ -3,28 +3,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import AddCustomer from "./AddCustomer";
 
-const Modal = styled.div`
-  position: relative;
-  z-index: 100;
-  width: 400px;
-  height: 630px;
-  top: 5%;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  left: 40%;
-  border-radius: 20px;
-  background-color: #f5f8f9;
-`;
-const StyledModel = styled.div`
-  position: absolute;
-  z-index: 100;
-  width: 100%;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background-color:none;
-  backdrop-filter:blur(2px);
-`
 const StyledDiv = styled.div`
   display: flex;
   align-items: center;
@@ -98,60 +76,72 @@ const HeadTr = styled(Tr)`
 function ManageCustomer() {
   const [customers, setCustomers] = useState([
     {
-      id: "",
-      name: "",
-      email: "",
-      phone: "",
-      area: "",
-      status: "",
+      id: 1,
+      name: "hanu",
+      email: "prakash@gmail.com",
+      phone: 123456789,
+      area: "ahm",
+      status: "active",
     },
-    // Add more customer data here if needed
+    {
+      id: 2,
+      name: "ravi",
+      email: "ravi@gmail.com",
+      phone: 9876543210,
+      area: "ahm",
+      status: "active",
+    },
   ]);
 
-
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [editingCustomer, setEditingCustomer] = useState(null);
 
 
   const handleSearch = () => {
     const filteredCustomers = customers.filter((customer) =>
       customer.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    // Update the state with filtered customers
+
     setCustomers(filteredCustomers);
   };
 
-  const handleEdit = (id) => {
-    // Logic for editing a customer
-    // Here you can implement a modal or navigate to an edit page for the selected customer
-    console.log("Edit customer with ID:", id);
+  const handleEdit = (customer) => {
+    setEditingCustomer({...customer});
   };
+  
 
   const handleDelete = (id) => {
-    // Logic for deleting a customer
-    // Here you can prompt the user for confirmation and then remove the customer from the list
     const updatedCustomers = customers.filter((customer) => customer.id !== id);
     setCustomers(updatedCustomers);
   };
   const handleAddCustomer = () => {
     setShowModal(true);
   };
-
+  const handleSave = (id) => {
+    const updatedCustomers = customers.map((cust) =>
+      cust.id === id ? editingCustomer : cust
+    );
+    setCustomers(updatedCustomers);
+    setEditingCustomer(null);  // Reset the editing state
+  };
+  
   // const closeModal = () => {
   //   setShowModal(false);
   // };
   return (
     <>
-      <div style={{ position: "relative", zIndex: "1000" }}>
+      <div>
         <h1>Manage Customers</h1>
         <StyledDiv>
           <StyledSelect
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
           >
-           {customers.map((customer) => ( <><option>{customer.name}Customer</option>
-            <option>Customer2</option>
-            <option>Customer3</option></>))}
+            {" "}
+            {customers.map((customer) => (
+              <option key={customer.id}>{customer.name}</option>
+            ))}
           </StyledSelect>
           <ButtonContainer>
             <StyledButton onClick={handleSearch}>Search</StyledButton>
@@ -160,47 +150,86 @@ function ManageCustomer() {
             </StyledButton>
           </ButtonContainer>
         </StyledDiv>
-        
-        {customers.length > 0 ? (
-          <div>
-            <h3>Customer List:</h3>
-            <Table>
-              <thead>
-                <HeadTr>
-                  <Th>Name</Th>
-                  <Th>Email</Th>
-                  <Th>Phone</Th>
-                  <Th>Area</Th>
-                  <Th>Status</Th>
-                  <Th>Action</Th>
-                </HeadTr>
-              </thead>
-              <tbody>
-                {customers.map((customer) => (
-                  <Tr key={customer.id}>
-                    <Td>{customer.name}</Td>
-                    <Td>{customer.email}</Td>
-                    <Td>{customer.phone}</Td>
-                    <Td>{customer.area}</Td>
-                    <Td>{customer.status}</Td>
-                    <Td>
-                      <button style={{ border: "none", outline: "none" }} onClick={() => handleEdit(customer.id)}>Edit</button> | 
-                      <button style={{ border: "none", outline: "none" }} onClick={() => handleDelete(customer.id)}>Delete</button>
-                    </Td>
-                  </Tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        ) : (
-          <div>No customers found.</div>
-        )}
+
+        <div>
+          <h3>Customer List:</h3>
+          <Table>
+            <thead>
+              <HeadTr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Phone</Th>
+                <Th>Area</Th>
+                <Th>Status</Th>
+                <Th>Action</Th>
+              </HeadTr>
+            </thead>
+            <tbody>
+  {customers.map((customer) =>
+    editingCustomer && editingCustomer.id === customer.id ? (
+      <Tr key={customer.id}>
+        <Td>
+          <input
+            type="text"
+            value={editingCustomer.name}
+            onChange={(e) => setEditingCustomer({...editingCustomer, name: e.target.value})}
+          />
+        </Td>
+        <Td>
+          <input
+            type="email"
+            value={editingCustomer.email}
+            onChange={(e) => setEditingCustomer({...editingCustomer, email: e.target.value})}
+          />
+        </Td>
+        <Td>
+          <input
+            type="text"
+            value={editingCustomer.phone}
+            onChange={(e) => setEditingCustomer({...editingCustomer, phone: e.target.value})}
+          />
+        </Td>
+        <Td>
+          <input
+            type="text"
+            value={editingCustomer.area}
+            onChange={(e) => setEditingCustomer({...editingCustomer, area: e.target.value})}
+          />
+        </Td>
+        <Td>
+          <select
+            value={editingCustomer.status}
+            onChange={(e) => setEditingCustomer({...editingCustomer, status: e.target.value})}
+          >
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </Td>
+        <Td>
+          <button className="btns" onClick={() => handleSave(customer.id)}> Save | </button>
+          <button className="btns" onClick={() => setEditingCustomer(null)}> Cancel</button>
+        </Td>
+      </Tr>
+    ) : (
+      <Tr key={customer.id}>
+        <Td>{customer.name}</Td>
+        <Td>{customer.email}</Td>
+        <Td>{customer.phone}</Td>
+        <Td>{customer.area}</Td>
+        <Td>{customer.status}</Td>
+        <Td>
+          <button className="btns" onClick={() => handleEdit(customer)}>Edit | </button>
+          <button className="btns" onClick={() => handleDelete(customer.id)}> Delete</button>
+        </Td>
+      </Tr>
+    )
+  )}
+</tbody>
+
+          </Table>
+        </div>
         {showModal && (
-          <StyledModel>
-          <Modal>
-            <AddCustomer customers={customers} setCustomers={setCustomers}/>
-          </Modal>
-          </StyledModel>
+          <AddCustomer customers={customers} setCustomers={setCustomers} />
         )}
       </div>
     </>

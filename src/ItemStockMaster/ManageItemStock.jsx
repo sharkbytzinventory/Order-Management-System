@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import AddItem from "./AddItem";
+import AddItem from "../Item-Master/AddItem";
+
 
 const StyledDiv = styled.div`
     display: flex;
@@ -73,7 +74,7 @@ const HeadTr = styled(Tr)`
   background-color: #5c9c5e;
   color: white;
 `;
-function ManageItem() {
+function ManageItemStock() {
   const [items, setItem] = useState([
     {id:1,
       item:"tv",
@@ -81,7 +82,7 @@ function ManageItem() {
       category:"electric",
       brand:"samsung",
       unit:"pcs",
-      status:"active"
+      qty:55,
     },
     {id:2,
       item:"phone",
@@ -89,7 +90,7 @@ function ManageItem() {
       category:"electric",
       brand:"apple",
       unit:"pcs",
-      status:"active"
+      qty:55,
     }
   ])
   const [showModal, setShowModal] = useState(false);
@@ -113,7 +114,7 @@ function ManageItem() {
 
   return (
     <>
-      <h1>Manage Items:</h1>
+      <h1>Manage Items Stock:</h1>
       <StyledDiv>
       <div>
         <StyledSelect onChange={(e) => setSearchTerm(e.target.value)}
@@ -128,7 +129,7 @@ function ManageItem() {
         </div>
         <ButtonContainer>
           <StyledButton onClick={handleSearch}>Search</StyledButton>
-          <StyledButton onClick={handleAddCustomer}>Add Item</StyledButton>
+          <StyledButton onClick={handleAddCustomer}>Add Item Stock</StyledButton>
         </ButtonContainer>
       </StyledDiv>
       <div>
@@ -141,7 +142,7 @@ function ManageItem() {
                   <Th>Category</Th>
                   <Th>Brand</Th>
                   <Th>Unit</Th>
-                  <Th>status</Th>
+                  <Th>Available Qty</Th>
                   <Th>Action</Th>
                   </HeadTr>
                   {items.map((item) => ( <>
@@ -151,11 +152,12 @@ function ManageItem() {
                     <Td>{item.category}</Td>
                     <Td>{item.brand}</Td>
                     <Td>{item.unit}</Td>
-                    <Td>{item.status}</Td>
+                    <Td>{item.qty}</Td>
                     <Td>
-                      <button className="btns"> Edit | </button>
-                      <button className="btns"> <Link to="itemsprice">Price | </Link> </button>
-                      <button className="btns" onClick={() => handleDelete(item.id)}> Delete</button>
+                    
+                      <Link to="/itemstock/editprice"> <button className="btns">Edit |</button></Link>
+                      <button className="btns" onClick={() => handleDelete(item.id)}> Delete |</button>
+                      <button className="btns" onClick={() => handleDelete(item.id)}> Stock</button>
                       </Td>
               </Tr></>
                   ))}
@@ -169,4 +171,4 @@ function ManageItem() {
     </>
   );
 }
-export default ManageItem;
+export default ManageItemStock;
