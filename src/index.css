@@ -1,21 +1,18 @@
 * {
-  margin:  0;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 .heading {
- 
   padding: 1.5rem;
   font-size: large;
-  font-family: 'Trebuchet MS', sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   color: cadetblue;
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
 }
-
-
 
 .btn {
   border: none;
@@ -27,9 +24,8 @@
 
 .customerpage {
   background-color: rgb(240, 240, 240);
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  padding: 1rem 1.0rem;
-
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  padding: 1rem 1rem;
 }
 
 .form {
@@ -45,20 +41,12 @@
 }
 
 
-
-/* label {
-  text-align: right;
- 
-  
-} */
 .additional {
   /* font-weight: bold; */
   padding-bottom: 15px;
   margin-bottom: 10px;
   font-size: 18px;
 }
-
-
 
 input {
   width: calc(100% - 1rem);
@@ -69,8 +57,9 @@ input {
   margin-bottom: 0.5rem;
 }
 
-.submit, .cancel {
-  background-color: #4CAF50;
+.submit,
+.cancel {
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 0.3rem;
@@ -82,5 +71,3 @@ input {
 .cancel {
   background-color: rgb(92, 92, 228);
 }
-
-

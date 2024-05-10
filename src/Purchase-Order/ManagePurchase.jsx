@@ -4,50 +4,13 @@ import SalesOrder from "../Sales-Order/SalesOrder";
 import PurchaseOrder from './PurchaseOrder'
 
 
-const initialCustomers = [
-  {
-    id: 1,
-    name: "Customer 1",
-    email: "customer1@example.com",
-    phone: "123-456-7890",
-    area: "Area 1",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Customer 2",
-    email: "customer2@example.com",
-    phone: "234-567-8901",
-    area: "Area 2",
-    status: "Inactive",
-  },
-];
-
-const Modal = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-`;
-
-const StyledModel = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
+function isDateString(dateString) {
+  return !isNaN(Date.parse(dateString));
+}
 const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+display: flex;
+align-items: center;
+justify-content: space-between;
 `;
 
 const StyledSelect = styled.select`
@@ -102,7 +65,7 @@ const StyledButton = styled.button`
     background-color: #0056b3;
   }
 
-const 
+const
 
   &:focus {
     outline: none;
@@ -131,50 +94,12 @@ const Tr = styled.tr`
   }
 `;
 
-const HeadTr = styled(Tr)`
-  background-color: #5c9c5e;
-  color: white;
-`;
-
 function ManagePurchase() {
-  const [customers, setCustomers] = useState(initialCustomers);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [salesData, setSalesData] = useState([]);
-  const [selectedSaleIndex, setSelectedSaleIndex] = useState(null);
 
-  useEffect(() => {
-    // Load sales data from local storage when component mounts
-    const storedSalesData = localStorage.getItem("salesData");
-    if (storedSalesData) {
-      setSalesData(JSON.parse(storedSalesData));
-    }
-  }, []);
-
-  useEffect(() => {
-    // Save sales data to local storage whenever it changes
-    localStorage.setItem("salesData", JSON.stringify(salesData));
-  }, [salesData]);
-
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
-  };
-
-  const handleSearch = () => {
-    // Implement search functionality here
-  };
-
-  const handleSaleOrder = () => {
-    setShowModal(true);
-  };
-
-  const handleSalesData = (data) => {
-    if (selectedSaleIndex !== null) {
-      // Update existing sale data
-      const updatedSalesData = [...salesData];
-      updatedSalesData[selectedSaleIndex] = data;
-      setSalesData(updatedSalesData);
-      setSelectedSaleIndex(null);
+  function handleDateChange(event) {
+    const selectedDate = event.target.value;
+    if (isDateString(selectedDate)) {
+      console.log("Valid date:", selectedDate);
     } else {
       // Add new sale data
       setSalesData([...salesData, data]);
@@ -279,7 +204,7 @@ function ManagePurchase() {
             <PurchaseOrder onSalesData={handleSalesData} saleData={selectedSaleIndex !== null ? salesData[selectedSaleIndex] : null} />
           </Modal>
         </StyledModel>
-        
+
       )}
     </>
   );

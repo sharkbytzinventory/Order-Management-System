@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import AddItem from "./AddItem";
+import AddItem from "../Item-Master/AddItem";
+import ItemStockDetail from "./ItemStockDetail";
+
 
 const StyledDiv = styled.div`
     display: flex;
@@ -73,26 +75,32 @@ const HeadTr = styled(Tr)`
   background-color: #5c9c5e;
   color: white;
 `;
-function ManageItem() {
+function ManageItemStock() {
   const [items, setItem] = useState([
     {id:1,
       item:"tv",
+      date: new Date().toLocaleDateString(),
       supplier:"Pm traders",
       category:"electric",
       brand:"samsung",
+      price:15000,
       unit:"pcs",
-      status:"active"
+      qty:55,
     },
     {id:2,
       item:"phone",
+      date: "22.4.2024",
       supplier:"mr traders",
       category:"electric",
       brand:"apple",
+      price:85000,
       unit:"pcs",
-      status:"active"
+      qty:55,
     }
   ])
   const [showModal, setShowModal] = useState(false);
+  const [showStock, setShowStock] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState(true);
 
   const handleSearch = () => {
@@ -110,10 +118,14 @@ function ManageItem() {
   const handleAddCustomer = () => {
     setShowModal(true);
   };
+  const handleItemdetail = () => {
+      setShowStock(true);
+    };
+  
 
   return (
     <>
-      <h1>Manage Items:</h1>
+      <h1>Manage Items Stock:</h1>
       <StyledDiv>
       <div>
         <StyledSelect onChange={(e) => setSearchTerm(e.target.value)}
@@ -128,7 +140,7 @@ function ManageItem() {
         </div>
         <ButtonContainer>
           <StyledButton onClick={handleSearch}>Search</StyledButton>
-          <StyledButton onClick={handleAddCustomer}>Add Item</StyledButton>
+          <StyledButton onClick={handleAddCustomer}>Add Item Stock</StyledButton>
         </ButtonContainer>
       </StyledDiv>
       <div>
@@ -141,7 +153,7 @@ function ManageItem() {
                   <Th>Category</Th>
                   <Th>Brand</Th>
                   <Th>Unit</Th>
-                  <Th>status</Th>
+                  <Th>Available Qty</Th>
                   <Th>Action</Th>
                   </HeadTr>
                   {items.map((item) => ( <>
@@ -151,11 +163,12 @@ function ManageItem() {
                     <Td>{item.category}</Td>
                     <Td>{item.brand}</Td>
                     <Td>{item.unit}</Td>
-                    <Td>{item.status}</Td>
+                    <Td>{item.qty}</Td>
                     <Td>
-                      <button className="btns"> Edit | </button>
-                      <button className="btns"> <Link to="itemsprice">Price | </Link> </button>
-                      <button className="btns" onClick={() => handleDelete(item.id)}> Delete</button>
+                    
+                      <Link to="/itemstock/editprice"> <button className="btns">Edit |</button></Link>
+                      <button className="btns" onClick={() => handleDelete(item.id)}> Delete |</button>
+                      <button className="btns" onClick={handleItemdetail}> Stock</button>
                       </Td>
               </Tr></>
                   ))}
@@ -166,7 +179,10 @@ function ManageItem() {
       {showModal && (
           <AddItem items={items} setItem={setItem} />
         )}
+        {showStock && (
+          <ItemStockDetail items={items} setItem={setItem} />
+        )}
     </>
   );
 }
-export default ManageItem;
+export default ManageItemStock;

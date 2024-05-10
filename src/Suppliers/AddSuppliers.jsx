@@ -1,15 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import "./Customer.css";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
 const Modal = styled.div`
   position: relative;
   z-index: 100;
-  top: 5%;
+  width: 400px;
+  height: 630px;
+  top: 10%;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   left: 30%;
   border-radius: 20px;
+  background-color: #f5f8f9;
 `;
 const StyledModel = styled.div`
   position: absolute;
@@ -19,10 +22,10 @@ const StyledModel = styled.div`
   top: 0;
   left: 0;
   background-color: none;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
 `;
 
-function AddCustomer({ customers, setCustomers }) {
+function AddSuppliers({ suppliers, setSuppliers}) {
   const initialData = {
     name: "",
     email: "",
@@ -34,7 +37,6 @@ function AddCustomer({ customers, setCustomers }) {
   };
   const [formData, setFormData] = useState({ ...initialData });
   const [showForm, setShowForm] = useState(true);
-  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setFormData({
@@ -45,11 +47,11 @@ function AddCustomer({ customers, setCustomers }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCustomers([...customers, formData]);
+    setSuppliers([...suppliers, formData]);
 
     setFormData({ ...initialData });
     console.log(formData);
-    setShowForm((show)=>!show);
+    setShowForm(false);
   };
 
   const handleCancel = (e) => {
@@ -63,7 +65,7 @@ function AddCustomer({ customers, setCustomers }) {
         <StyledModel>
           <Modal>
             <form onSubmit={handleSubmit} className="customer-form">
-              <h3 className="form-heading">Add/Edit Customer</h3>
+              <h3 className="form-heading">Add/Edit Suppliers</h3>
               <label className="customer-form__label">
                 Name:
                 <input
@@ -143,7 +145,7 @@ function AddCustomer({ customers, setCustomers }) {
                   Save
                 </button>
                 <button
-                  onClick={()=> navigate("/customer")}
+                  onClick={handleCancel}
                   className="customer-form__button"
                 >
                   Cancel
@@ -157,4 +159,4 @@ function AddCustomer({ customers, setCustomers }) {
   );
 }
 
-export default AddCustomer;
+export default AddSuppliers;

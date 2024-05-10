@@ -10,7 +10,8 @@ import styled from "styled-components";
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.9rem;
+  margin-top: 25px;
   @media screen {
       max-width: 100%;
   }
@@ -35,7 +36,7 @@ const StyledNavLink = styled(NavLink)`
   &:active,
   &.active:link,
   &.active:visited {
-    color: var(--color-grey-800);
+    color: var(--color-grey-600);
     background-color: var(--color-grey-50);
     border-radius: var(--border-radius-sm);
   }
@@ -55,15 +56,17 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 function MainPage(){
-  return(<>
   
+  return(
+  <>
   <NavList>
-    <li><StyledNavLink to="/Dashboard">Dashboard</StyledNavLink></li>
+    <li><StyledNavLink to="/dashboard">Dashboard</StyledNavLink></li>
     <li><StyledNavLink to="/customer">Customer</StyledNavLink></li>
     <li><StyledNavLink to="/suppliers">Suppliers</StyledNavLink></li>
     <li><StyledNavLink to="/items">Items Master</StyledNavLink></li>
     <li><StyledNavLink to="/sales">Sales Order</StyledNavLink></li>
     <li><StyledNavLink to="/purchaseorder">Purchase Order</StyledNavLink></li>
+    <li><StyledNavLink to="/itemstock">Item Stock Master</StyledNavLink></li>
   </NavList>
  
   </>)

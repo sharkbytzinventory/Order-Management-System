@@ -14,9 +14,11 @@ const StyledSide = styled.aside`
 function Sidebar(){
       return (
             <>
+            
             <StyledSide>
                   <MainPage/>
             </StyledSide>
+            
             </>
       )
 }

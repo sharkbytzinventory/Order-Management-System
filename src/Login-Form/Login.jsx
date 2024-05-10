@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MdEmail, MdVisibility, MdVisibilityOff } from "react-icons/md";
-//import Customer from "./Customer";
 import Header from "../Header/Header";
-// import Dashboard from "../Dashboard/Dashboard";
-// import MainPage from "../pages/MainPage";
-// import App from "../App";
 import ApplayOut from "../pages/AppLayOut";
+import Navbar from "../Navbar";
 
 
 
@@ -79,12 +76,11 @@ function Login() {
       <div className="login">
         {isLogin ? (
           <>
-           
-            <ApplayOut user={loggedInUser} />
+            <ApplayOut />
           </>
         ) : (
           <>
-            <Header />
+              <Header/>
             <form onSubmit={onSubmits} className="form">
 
               <h2>Sign-in</h2>
@@ -134,7 +130,6 @@ function Login() {
                 </Link>
               </div>
               <button type="submit">Sign-in</button>
-            
             </form>
           </>
         )}

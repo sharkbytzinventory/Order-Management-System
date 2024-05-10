@@ -3,51 +3,14 @@ import styled from "styled-components";
 import SalesOrder from "../Sales-Order/SalesOrder";
 
 
-const initialCustomers = [
-  {
-    id: 1,
-    name: "Customer 1",
-    email: "customer1@example.com",
-    phone: "123-456-7890",
-    area: "Area 1",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Customer 2",
-    email: "customer2@example.com",
-    phone: "234-567-8901",
-    area: "Area 2",
-    status: "Inactive",
-  },
-];
-
-const Modal = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-`;
-
-const StyledModel = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
+function isDateString(dateString) {
+  return !isNaN(Date.parse(dateString));
+}
 const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  `;
 
 const StyledSelect = styled.select`
   width: 200px;
@@ -101,7 +64,7 @@ const StyledButton = styled.button`
     background-color: #0056b3;
   }
 
-const 
+const
 
   &:focus {
     outline: none;
@@ -129,6 +92,8 @@ const Tr = styled.tr`
     background-color: #f2f2f2;
   }
 `;
+function ManagePurchase() {
+
 
 const HeadTr = styled(Tr)`
   background-color: #5c9c5e;
@@ -278,7 +243,7 @@ function Sales() {
             <SalesOrder onSalesData={handleSalesData} saleData={selectedSaleIndex !== null ? salesData[selectedSaleIndex] : null} />
           </Modal>
         </StyledModel>
-        
+
       )}
     </>
   );
