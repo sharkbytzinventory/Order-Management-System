@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import AddItem from "../Item-Master/AddItem";
+import ItemStockDetail from "./ItemStockDetail";
 
 
 const StyledDiv = styled.div`
@@ -78,22 +79,28 @@ function ManageItemStock() {
   const [items, setItem] = useState([
     {id:1,
       item:"tv",
+      date: new Date().toLocaleDateString(),
       supplier:"Pm traders",
       category:"electric",
       brand:"samsung",
+      price:15000,
       unit:"pcs",
       qty:55,
     },
     {id:2,
       item:"phone",
+      date: "22.4.2024",
       supplier:"mr traders",
       category:"electric",
       brand:"apple",
+      price:85000,
       unit:"pcs",
       qty:55,
     }
   ])
   const [showModal, setShowModal] = useState(false);
+  const [showStock, setShowStock] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState(true);
 
   const handleSearch = () => {
@@ -111,6 +118,10 @@ function ManageItemStock() {
   const handleAddCustomer = () => {
     setShowModal(true);
   };
+  const handleItemdetail = () => {
+      setShowStock(true);
+    };
+  
 
   return (
     <>
@@ -157,7 +168,7 @@ function ManageItemStock() {
                     
                       <Link to="/itemstock/editprice"> <button className="btns">Edit |</button></Link>
                       <button className="btns" onClick={() => handleDelete(item.id)}> Delete |</button>
-                      <button className="btns" onClick={() => handleDelete(item.id)}> Stock</button>
+                      <button className="btns" onClick={handleItemdetail}> Stock</button>
                       </Td>
               </Tr></>
                   ))}
@@ -167,6 +178,9 @@ function ManageItemStock() {
       </div>
       {showModal && (
           <AddItem items={items} setItem={setItem} />
+        )}
+        {showStock && (
+          <ItemStockDetail items={items} setItem={setItem} />
         )}
     </>
   );

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import "./Customer.css";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
 const Modal = styled.div`
   position: relative;
@@ -33,6 +34,7 @@ function AddCustomer({ customers, setCustomers }) {
   };
   const [formData, setFormData] = useState({ ...initialData });
   const [showForm, setShowForm] = useState(true);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setFormData({
@@ -47,7 +49,7 @@ function AddCustomer({ customers, setCustomers }) {
 
     setFormData({ ...initialData });
     console.log(formData);
-    setShowForm(false);
+    setShowForm((show)=>!show);
   };
 
   const handleCancel = (e) => {
@@ -141,7 +143,7 @@ function AddCustomer({ customers, setCustomers }) {
                   Save
                 </button>
                 <button
-                  onClick={handleCancel}
+                  onClick={()=> navigate("/customer")}
                   className="customer-form__button"
                 >
                   Cancel
