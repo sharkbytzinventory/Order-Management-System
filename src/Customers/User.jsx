@@ -3,7 +3,7 @@ import AddNewCustomer from "./AddNewCustomer";
 
 
 
-function Customer() {
+function User() {
   return (
     <>
       <div>
@@ -20,4 +20,4 @@ function Customer() {
     </>
   );
 }
-export default Customer;
+export default User;

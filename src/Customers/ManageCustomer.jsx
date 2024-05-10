@@ -95,6 +95,9 @@ const HeadTr = styled(Tr)`
   background-color: #5c9c5e;
   color: white;
 `;
+
+
+
 function ManageCustomer() {
   const [customers, setCustomers] = useState([
     {
@@ -105,8 +108,7 @@ function ManageCustomer() {
       area: "",
       status: "",
     },
-    // Add more customer data here if needed
-  ]);
+      ]);
 
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -116,20 +118,15 @@ function ManageCustomer() {
   const handleSearch = () => {
     const filteredCustomers = customers.filter((customer) =>
       customer.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    // Update the state with filtered customers
+    );    
     setCustomers(filteredCustomers);
   };
 
   const handleEdit = (id) => {
-    // Logic for editing a customer
-    // Here you can implement a modal or navigate to an edit page for the selected customer
     console.log("Edit customer with ID:", id);
   };
 
   const handleDelete = (id) => {
-    // Logic for deleting a customer
-    // Here you can prompt the user for confirmation and then remove the customer from the list
     const updatedCustomers = customers.filter((customer) => customer.id !== id);
     setCustomers(updatedCustomers);
   };
@@ -137,9 +134,7 @@ function ManageCustomer() {
     setShowModal(true);
   };
 
-  // const closeModal = () => {
-  //   setShowModal(false);
-  // };
+
   return (
     <>
       <div style={{ position: "relative", zIndex: "1000" }}>

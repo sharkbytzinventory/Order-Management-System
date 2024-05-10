@@ -58,7 +58,7 @@ function MainPage(){
   return(<>
   
   <NavList>
-    <li><StyledNavLink to="/">Dashboard</StyledNavLink></li>
+    <li><StyledNavLink to="/Dashboard">Dashboard</StyledNavLink></li>
     <li><StyledNavLink to="/customer">Customer</StyledNavLink></li>
     <li><StyledNavLink to="/suppliers">Suppliers</StyledNavLink></li>
     <li><StyledNavLink to="/items">Items Master</StyledNavLink></li>
