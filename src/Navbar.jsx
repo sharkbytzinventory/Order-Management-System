@@ -1,3 +1,4 @@
+import { IoMdHome } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 function Navbar() {
@@ -8,7 +9,7 @@ function Navbar() {
         <Link to="/" style={{ textDecoration: "none" }}>
           <h2 className="logo">
             <span className="span">
-              <img src="home.svg" style={{ paddingTop: "0.4rem" }} />
+             <IoMdHome/>
             </span>
             Order Mangement
           </h2>

@@ -1,4 +1,10 @@
 
+import { BiPurchaseTag } from "react-icons/bi";
+import { CgNotes } from "react-icons/cg";
+import { FaPaintBrush, FaStore } from "react-icons/fa";
+import { FaPeopleCarryBox } from "react-icons/fa6";
+import { RiDashboard2Fill } from "react-icons/ri";
+import { SiSalesforce } from "react-icons/si";
 import { NavLink} from "react-router-dom";
 import styled from "styled-components";
 
@@ -55,13 +61,13 @@ function MainPage(){
   return(
   <>
   <NavList>
-    <li><StyledNavLink to="/dashboard">Dashboard</StyledNavLink></li>
-    <li><StyledNavLink to="/customer">Customer</StyledNavLink></li>
-    <li><StyledNavLink to="/suppliers">Suppliers</StyledNavLink></li>
-    <li><StyledNavLink to="/items">Items Master</StyledNavLink></li>
-    <li><StyledNavLink to="/sales">Sales Order</StyledNavLink></li>
-    <li><StyledNavLink to="/purchaseorder">Purchase Order</StyledNavLink></li>
-    <li><StyledNavLink to="/itemstock">Item Stock Master</StyledNavLink></li>
+    <li><StyledNavLink to="/dashboard"> <RiDashboard2Fill/> Dashboard</StyledNavLink></li>
+    <li><StyledNavLink to="/customer"> <FaPeopleCarryBox/> Customer</StyledNavLink></li>
+    <li><StyledNavLink to="/suppliers"> <CgNotes/> Suppliers</StyledNavLink></li>
+    <li><StyledNavLink to="/items"> <FaPaintBrush/> Items Master</StyledNavLink></li>
+    <li><StyledNavLink to="/sales"> <SiSalesforce/> Sales Order</StyledNavLink></li>
+    <li><StyledNavLink to="/purchaseorder"> <BiPurchaseTag/> Purchase Order</StyledNavLink></li>
+    <li><StyledNavLink to="/itemstock"> <FaStore/> Item Stock Master</StyledNavLink></li>
   </NavList>
  
   </>)

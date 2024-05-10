@@ -14,8 +14,8 @@ function Navbar1() {
           </h2>
         </Link>
         </div>
-        <div>
-        <nav>
+        <div className="logout">
+        <nav >
           <Link to="/">Logout</Link>
         </nav>
         </div>

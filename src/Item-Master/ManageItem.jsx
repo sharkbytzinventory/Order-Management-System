@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import AddItem from "./AddItem";
+import ItemStockUtilization from "./ItemStockUtilization";
 
 const StyledDiv = styled.div`
     display: flex;
@@ -81,7 +82,9 @@ function ManageItem() {
       category:"electric",
       brand:"samsung",
       unit:"pcs",
-      status:"active"
+      status:"active",
+      qty:40,
+      date:"10.5.2024",
     },
     {id:2,
       item:"phone",
@@ -89,10 +92,13 @@ function ManageItem() {
       category:"electric",
       brand:"apple",
       unit:"pcs",
-      status:"active"
+      status:"active",
+      qty:60,
+      date:"5.5.2024",
     }
   ])
   const [showModal, setShowModal] = useState(false);
+  const [showStock, setShowStock] = useState(false);
   const [searchTerm, setSearchTerm] = useState(true);
 
   const handleSearch = () => {
@@ -109,6 +115,9 @@ function ManageItem() {
   };
   const handleAddCustomer = () => {
     setShowModal(true);
+  };
+  const handleStock = () => {
+    setShowStock(true);
   };
 
   return (
@@ -153,9 +162,10 @@ function ManageItem() {
                     <Td>{item.unit}</Td>
                     <Td>{item.status}</Td>
                     <Td>
-                      <button className="btns"> Edit | </button>
-                      <button className="btns"> <Link to="itemsprice">Price | </Link> </button>
-                      <button className="btns" onClick={() => handleDelete(item.id)}> Delete</button>
+                      <button className="btns"> Edit <span> | </span> </button>
+                      <button className="btns"> <Link to="itemsprice">Stock <span> | </span> </Link> </button>
+                      <button className="btns" onClick={() => handleDelete(item.id)}> Delete <span> | </span></button>
+                      <button className="btns" onClick={handleStock}> Detail  </button>
                       </Td>
               </Tr></>
                   ))}
@@ -165,6 +175,9 @@ function ManageItem() {
       </div>
       {showModal && (
           <AddItem items={items} setItem={setItem} />
+        )}
+        {showStock && (
+          <ItemStockUtilization items={items}  />
         )}
     </>
   );

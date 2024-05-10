@@ -27,13 +27,14 @@ function ItemPrice() {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
+    qty:"",
     date: "",
   });
 
   const [data, setData] = useState([
-    { date: "30-Apr-2024", price: 40 },
-    { date: "30-Mar-2024", price: 39 },
-    { date: "25-Feb-2024", price: 35 },
+    { date: "30-Apr-2024",qty:12, price: 40 },
+    { date: "30-Mar-2024",qty:15, price: 39 },
+    { date: "25-Feb-2024",qty:20, price: 35 },
   ]);
 
   const handleInputChange = (event) => {
@@ -52,6 +53,7 @@ function ItemPrice() {
     setFormData({
       name: "",
       price: "",
+      qty:"",
       date: "",
     });
   };
@@ -62,6 +64,7 @@ function ItemPrice() {
     setFormData({
       name: itemToEdit.name,
       price: itemToEdit.price,
+      qty:itemToEdit.qty,
       date: itemToEdit.date,
     });
   };
@@ -109,11 +112,21 @@ function ItemPrice() {
             className="customer-form__input-date"
           />
         </label>
-
+        <label className="customer-form__label">
+          Qty:
+          <input
+            type="text"
+            name="qty"
+            value={formData.qty}
+            onChange={handleInputChange}
+            className="customer-form__input"
+          />
+        </label>
         <table className="item-price-table">
           <thead>
             <tr>
               <th>Date</th>
+              <th>Qty</th>
               <th>Price</th>
               <th>Action</th>
             </tr>
@@ -122,6 +135,7 @@ function ItemPrice() {
             {data.map((row, index) => (
               <tr key={index}>
                 <td>{row.date}</td>
+                <td>{row.qty}</td>
                 <td>{row.price}</td>
                 <td>
                   <button
@@ -143,7 +157,7 @@ function ItemPrice() {
         </table>
 
         <div className="customer-form__button-container">
-          <button type="submit" className="customer-form__button" onClick={() => navigate("/items")}>
+          <button type="submit" className="customer-form__button" >
             Save
           </button>
           <button type="cancel" className="customer-form__button" onClick={() => navigate("/items")}>

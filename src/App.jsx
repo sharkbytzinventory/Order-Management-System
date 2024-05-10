@@ -34,7 +34,7 @@ function App() {
           <Route path="forgot" element={<ForgotPassword />} />        
          
         <Route exact element={<ApplayOut />}>
-          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route index path="dashboard" element={<Dashboard />} />
           <Route path="customer" element={<ManageCustomer />} />
           <Route path="suppliers" element={<ManageSuppliers />} />
           <Route path="items" element={<ManageItem />} />

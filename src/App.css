@@ -9,7 +9,7 @@ body {
 .navbr {
   display: flex;
   align-items: center;
-  justify-content: space-around; 
+  justify-content: space-around;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   position: relative;
   width: 100%;
@@ -39,17 +39,18 @@ nav a {
 }
 
 nav a:hover {
-  color:white;
+  color: white;
   background-color: #288af3;
   transform: scale(1.1);
 }
 
-nav a.active{
-  background-color: #4CAF50;
+nav a.active {
+  background-color: #4caf50;
 }
 
 /* Form and Login Styles */
-.form, .login .form {
+.form,
+.login .form {
   width: 100%;
   max-width: 400px;
   margin: 20px auto;
@@ -88,12 +89,14 @@ nav a.active{
   background-color: #4f7fc3;
 }
 
-.form-switch, .login .form-switch {
+.form-switch,
+.login .form-switch {
   margin-top: 20px;
   text-align: center;
 }
 
-.form-switch a, .login .form-switch a .switch a{
+.form-switch a,
+.login .form-switch a .switch a {
   color: #007bff;
   text-decoration: none;
 }
@@ -172,11 +175,12 @@ nav a.active{
     font-size: 10px;
   }
 
-  .form, .login .form {
-    max-width:200px;
+  .form,
+  .login .form {
+    max-width: 200px;
     top: 80%;
     left: 50%;
-    font-size:10px;
+    font-size: 10px;
   }
 }
 
@@ -211,19 +215,23 @@ nav a.active{
   border: none;
   outline: none;
   color: #007bff;
+  background: none;
 }
 .btns:hover {
-  color:blue;
+  color: blue;
 }
 .btns:focus {
   border: none;
   outline: none;
 }
 .navbar {
-height: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 40rem;
-  box-shadow: 0px 0 10px rgba(0, 0, 0, 0.5);
+  justify-content: space-between;
+  box-shadow: 0 10px 0 0 rgba(0, 0, 0, 1.5rem);
 }
+.logout {
+  margin-right: 40px;
+}
+
