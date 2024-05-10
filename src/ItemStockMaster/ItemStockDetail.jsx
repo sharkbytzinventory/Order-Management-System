@@ -197,7 +197,7 @@ function ItemStockDetail({ items, setItem }) {
             </Table>
             <button
               className="customer-form__button"
-              onClick={() => navigate("/itemstock")}
+              onClick={() => navigate("/items")}
             >
               Close
             </button>

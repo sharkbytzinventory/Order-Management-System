@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MdEmail, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import Header from "../Header/Header";
 import ApplayOut from "../pages/AppLayOut";
+import Navbar from "../Navbar";
 
 
 

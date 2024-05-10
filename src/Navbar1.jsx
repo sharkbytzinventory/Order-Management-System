@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar1() {
   return (
     <>
-      <div className="navbr">
+      <div className="navbar" style={{position:"inherit"}}>
         <div>
         <Link to="/" style={{ textDecoration: "none" }}>
           <h2 className="logo">
@@ -16,7 +16,7 @@ function Navbar() {
         </div>
         <div>
         <nav>
-          <Link to="/login">Login</Link>
+          <Link to="/">Logout</Link>
         </nav>
         </div>
       </div>
@@ -24,4 +24,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Navbar1;

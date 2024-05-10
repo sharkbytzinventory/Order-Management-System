@@ -117,7 +117,7 @@ function ManageSupplier() {
     setSuppliers(updatedCustomers);
   };
   const handleAddCustomer = () => {
-    setShowModal(true);
+    setShowModal((show) => !show);
   };
 
   // const closeModal = () => {

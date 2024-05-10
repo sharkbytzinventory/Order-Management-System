@@ -116,7 +116,7 @@ function ManageCustomer() {
     setCustomers(updatedCustomers);
   };
   const handleAddCustomer = () => {
-    setShowModal(true);
+    setShowModal((show) =>!show);
   };
   const handleSave = (id) => {
     const updatedCustomers = customers.map((cust) =>
