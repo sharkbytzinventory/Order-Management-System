@@ -211,6 +211,7 @@ nav a.active{
   border: none;
   outline: none;
   color: #007bff;
+  padding: 0 1rem;
 }
 .btns:hover {
   color:blue;

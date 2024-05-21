@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./salesorder.css";
 import AddSalesItem from "./AddSalesItem";
+import AddPurchaseItem from "../Purchase-Order/AddPurchaseItem";
 
 
 const SalesOrder = ({ onSalesData }) => {
@@ -102,6 +103,7 @@ const SalesOrder = ({ onSalesData }) => {
       </form>
 
       <AddSalesItem/>
+      
 
       <button>Save</button>
       <button>cancel</button>

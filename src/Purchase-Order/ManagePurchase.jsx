@@ -1,16 +1,52 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import SalesOrder from "../Sales-Order/SalesOrder";
-import PurchaseOrder from './PurchaseOrder'
+import PurchaseOrder from "./PurchaseOrder";
+import AddOrEdit from "./AddOrEdit";
 
+const initialCustomers = [
+  {
+    id: 1,
+    name: "Customer 1",
+    email: "customer1@example.com",
+    phone: "123-456-7890",
+    area: "Area 1",
+    status: "Active",
+  },
+  {
+    id: 2,
+    name: "Customer 2",
+    email: "customer2@example.com",
+    phone: "234-567-8901",
+    area: "Area 2",
+    status: "Inactive",
+  },
+];
 
-function isDateString(dateString) {
-  return !isNaN(Date.parse(dateString));
-}
+const Modal = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+`;
+
+const StyledModel = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StyledDiv = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const StyledSelect = styled.select`
@@ -65,8 +101,6 @@ const StyledButton = styled.button`
     background-color: #0056b3;
   }
 
-const
-
   &:focus {
     outline: none;
   }
@@ -94,28 +128,66 @@ const Tr = styled.tr`
   }
 `;
 
-function ManagePurchase() {
+const HeadTr = styled(Tr)`
+  background-color: #5c9c5e;
+  color: white;
+`;
 
-  function handleDateChange(event) {
-    const selectedDate = event.target.value;
-    if (isDateString(selectedDate)) {
-      console.log("Valid date:", selectedDate);
+function ManagePurchase() {
+  const [customers, setCustomers] = useState(initialCustomers);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [purchaseData, setPurchaseData] = useState([]);
+  const [selectedPurchaseIndex, setSelectedPurchaseIndex] = useState(null);
+
+  useEffect(() => {
+    // Load purchase data from local storage when component mounts
+    const storedPurchaseData = localStorage.getItem("purchaseData");
+    if (storedPurchaseData) {
+      setPurchaseData(JSON.parse(storedPurchaseData));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save purchase data to local storage whenever it changes
+    localStorage.setItem("purchaseData", JSON.stringify(purchaseData));
+  }, [purchaseData]);
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const handleSearch = () => {
+    // Implement search functionality here
+  };
+
+  const handlePurchaseOrder = () => {
+    setShowModal(true);
+  };
+
+  const handlePurchaseData = (data) => {
+    if (selectedPurchaseIndex !== null) {
+      // Update existing purchase data
+      const updatedPurchaseData = [...purchaseData];
+      updatedPurchaseData[selectedPurchaseIndex] = data;
+      setPurchaseData(updatedPurchaseData);
+      setSelectedPurchaseIndex(null);
     } else {
-      // Add new sale data
-      setSalesData([...salesData, data]);
+      // Add new purchase data
+      setPurchaseData([...purchaseData, data]);
     }
     setShowModal(false);
   };
 
   const handleEdit = (index) => {
-    setSelectedSaleIndex(index);
+    setSelectedPurchaseIndex(index);
     setShowModal(true);
   };
 
   const handleDelete = (index) => {
-    const updatedSalesData = [...salesData];
-    updatedSalesData.splice(index, 1);
-    setSalesData(updatedSalesData);
+    const updatedPurchaseData = [...purchaseData];
+    updatedPurchaseData.splice(index, 1);
+    setPurchaseData(updatedPurchaseData);
   };
 
   return (
@@ -143,7 +215,7 @@ function ManagePurchase() {
         </StyledSelect>
         <ButtonContainer>
           <StyledButton onClick={handleSearch}>Search</StyledButton>
-          <StyledButton onClick={handleSaleOrder}>Add Purchase Order</StyledButton>
+          <StyledButton onClick={handlePurchaseOrder}>Add Purchase Order</StyledButton>
         </ButtonContainer>
       </StyledDiv>
       <div>
@@ -160,38 +232,50 @@ function ManagePurchase() {
             </HeadTr>
           </thead>
           <tbody>
-              <Tr>
-              <Td>Test</Td>
-              <Td>0003</Td>
-              <Td>08/05/2024</Td>
-              <Td>24000</Td>
-              <Td>active</Td>
-              <Td>
-                <Td>Edit</Td>
-                <Td>Delete</Td>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>admin</Td>
-              <Td>0008</Td>
-              <Td>09/05/2024</Td>
-              <Td>550000</Td>
-              <Td>inactive</Td>
-              <Td>
-                <Td>Edit</Td>
-                <Td>Delete</Td>
-              </Td>
-            </Tr>
-            {salesData.map((sale, index) => (
+          <Tr>
+            <Td>Test</Td>
+            <Td>0003</Td>
+            <Td>08/05/2024</Td>
+            <Td>24000</Td>
+            <Td>active</Td>
+            <Td>
+              <button onClick={() => handleEdit(index)} className="btns">
+                Edit
+              </button>
+              <button onClick={() => handleDelete(index)} className="btns">
+                Delete
+              </button>
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>admin</Td>
+            <Td>0008</Td>
+            <Td>09/05/2024</Td>
+            <Td>550000</Td>
+            <Td>inactive</Td>
+            <Td>
+              <button onClick={() => handleEdit(index)} className="btns">
+                Edit
+              </button>
+              <button onClick={() => handleDelete(index)} className="btns">
+                Delete
+              </button>
+            </Td>
+          </Tr>
+            {purchaseData.map((purchase, index) => (
               <Tr key={index}>
-                <Td>{sale.customer}</Td>
-                <Td>{sale.invoice}</Td>
-                <Td>{sale.date}</Td>
-                <Td>{sale.total}</Td>
-                <Td>{sale.status}</Td>
+                <Td>{purchase.customer}</Td>
+                <Td>{purchase.invoice}</Td>
+                <Td>{purchase.date}</Td>
+                <Td>{purchase.total}</Td>
+                <Td>{purchase.status}</Td>
                 <Td>
-                  <button className="btns" onClick={() => handleEdit(index)}>Edit </button>
-                  <button className="btns" onClick={() => handleDelete(index)}>Delete</button>
+                  <button onClick={() => handleEdit(index)} className="btns">
+                    Edit
+                  </button>
+                  <button onClick={() => handleDelete(index)} className="btns">
+                    Delete
+                  </button>
                 </Td>
               </Tr>
             ))}
@@ -201,14 +285,18 @@ function ManagePurchase() {
       {showModal && (
         <StyledModel>
           <Modal>
-            <PurchaseOrder onSalesData={handleSalesData} saleData={selectedSaleIndex !== null ? salesData[selectedSaleIndex] : null} />
+            <PurchaseOrder
+              onPurchaseData={handlePurchaseData}
+              purchaseData={
+                selectedPurchaseIndex !== null ? purchaseData[selectedPurchaseIndex] : null
+              }
+            />
           </Modal>
         </StyledModel>
-
       )}
+      {/* <AddOrEdit /> */}
     </>
   );
 }
 
 export default ManagePurchase;
-
