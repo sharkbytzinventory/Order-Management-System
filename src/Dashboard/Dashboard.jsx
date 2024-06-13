@@ -4,23 +4,27 @@ import styled from "styled-components";
 function isDateString(dateString) {
   return !isNaN(Date.parse(dateString));
 }
+
+function getTodayDate() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 const StyledDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-const StyledSelect = styled.select`
-  width: 200px;
-  height: 40px;
-  background-color: white;
-  color: #333;
-  padding-left: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  margin: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+const StyledDv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+  gap: 10px;
 `;
 
 const StyledLabel = styled.label`
@@ -28,16 +32,13 @@ const StyledLabel = styled.label`
   margin: 10px;
 `;
 
-const StyledTbl = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+const StyledTable = styled.table`
+  width: 370px;
+  font-size: 18px;
 `;
-const StyledTdata = styled.div`
-  width: 500px;
-`;
+
 const StyledInput = styled.input`
-  width: 200px;
+  width: 100px;
   height: 40px;
   background-color: white;
   color: #333;
@@ -75,47 +76,63 @@ const StyledButton = styled.button`
   }
 `;
 
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  padding: 10px;
+const DropdownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
 `;
 
-const Th = styled.th`
-  border: 1px solid #ddd;
-  padding: 8px;
+const DropdownButton = styled.button`
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  color: #333;
+  padding-left: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: left;
-`;
+  cursor: pointer;
 
-const Td = styled.td`
-  border: 1px solid #ddd;
-  padding: 8px;
-`;
-const Tr = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
+  &:focus {
+    outline: none;
   }
 `;
 
-const HeadTr = styled(Tr)`
-  background-color: #5c9c5e;
-  color: white;
+const DropdownOptions = styled.div`
+  position: absolute;
+  width: 200px;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 `;
-const StyledRow = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
+
+const Option = styled.div`
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
   }
 `;
 
 function Dashboard() {
-
   const [purchase, setItem] = useState([
     { id: 1, des: "item 1", qty: 55, price: 350 },
     { id: 2, des: "item 2", qty: 88, price: 100 },
     { id: 3, des: "item 3", qty: 65, price: 50 },
     { id: 4, des: "item 4", qty: 78, price: 700 },
   ]);
-  const purchaseAmount = purchase.reduce((acc, item) => acc + (item.qty * item.price), 0);
+  const purchaseAmount = purchase.reduce(
+    (acc, item) => acc + item.qty * item.price,
+    0
+  );
 
   const [sales, setSale] = useState([
     { id: 1, des: "item 1", qty: 55, price: 500 },
@@ -123,7 +140,18 @@ function Dashboard() {
     { id: 3, des: "item 3", qty: 65, price: 80 },
     { id: 4, des: "item 4", qty: 78, price: 900 },
   ]);
-  const orderAmount = sales.reduce((acc, sale) => acc + (sale.qty * sale.price), 0);
+  const orderAmount = sales.reduce(
+    (acc, sale) => acc + sale.qty * sale.price,
+    0
+  );
+
+  const [rems, setRem] = useState([
+    { id: 1, des: "item 1", qty: 15, price: 500 },
+    { id: 2, des: "item 2", qty: 28, price: 150 },
+    { id: 3, des: "item 3", qty: 5, price: 500 },
+    { id: 4, des: "item 4", qty: 8, price: 150 },
+  ]);
+  const RemAmount = rems.reduce((acc, rem) => acc + rem.qty * rem.price, 0);
 
   function handleDateChange(event) {
     const selectedDate = event.target.value;
@@ -134,85 +162,189 @@ function Dashboard() {
     }
   }
 
+  const todayDate = getTodayDate();
+
+  const [dropdownOpenCustomer, setDropdownOpenCustomer] = useState(false);
+  const [dropdownOpenPO, setDropdownOpenPO] = useState(false);
+  const [dropdownOpenCustomerPO, setDropdownOpenCustomerPO] = useState(false);
+
+  const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [selectedPO, setSelectedPO] = useState("");
+  const [selectedCustomerPO, setSelectedCustomerPO] = useState("");
+
+  const toggleDropdownCustomer = () => {
+    setDropdownOpenCustomer(!dropdownOpenCustomer);
+  };
+
+  const toggleDropdownPO = () => {
+    setDropdownOpenPO(!dropdownOpenPO);
+  };
+
+  const toggleDropdownCustomerPO = () => {
+    setDropdownOpenCustomerPO(!dropdownOpenCustomerPO);
+  };
+
+  const handleCustomerSelect = (customer) => {
+    setSelectedCustomer(customer);
+    setDropdownOpenCustomer(false);
+  };
+
+  const handlePOSelect = (po) => {
+    setSelectedPO(po);
+    setDropdownOpenPO(false);
+  };
+
+  const handleCustomerPOSelect = (customerPO) => {
+    setSelectedCustomerPO(customerPO);
+    setDropdownOpenCustomerPO(false);
+  };
+
   return (
     <>
       <h1>Dashboard - Profit & Loss</h1>
       <StyledDiv>
-        <div>
-          <StyledSelect value="customer name">
-            <option>Admin</option>
-            <option>Test</option>
-            
-          </StyledSelect>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <DropdownContainer>
+            <DropdownButton onClick={toggleDropdownCustomer}>
+              {selectedCustomer || "Customer Name"}
+            </DropdownButton>
+            {dropdownOpenCustomer && (
+              <DropdownOptions>
+                {sales.map((sale) => (
+                  <Option
+                    key={sale.id}
+                    onClick={() => handleCustomerSelect(sale.des)}
+                  >
+                    {sale.des}
+                  </Option>
+                ))}
+              </DropdownOptions>
+            )}
+          </DropdownContainer>
           <StyledLabel htmlFor="orderDate">Order Date:</StyledLabel>
           <StyledInput
             type="date"
             id="orderDate"
             onChange={handleDateChange}
-          />{" "}
+            max={todayDate}
+          />
           To
-          <StyledInput type="date" id="orderDate" onChange={handleDateChange} />
-          <StyledSelect>
-            <option>Purchase order 1</option>
-            <option>Purchase order 2</option>
-            <option>Purchase order 3</option>
-          </StyledSelect>
+          <StyledInput
+            type="date"
+            id="endDate"
+            onChange={handleDateChange}
+            max={todayDate}
+          />
+          <DropdownContainer>
+            <DropdownButton onClick={toggleDropdownCustomerPO}>
+              {selectedCustomerPO || "Customer PO"}
+            </DropdownButton>
+            {dropdownOpenCustomerPO && (
+              <DropdownOptions>
+                {sales.map((sale) => (
+                  <Option
+                    key={sale.id}
+                    onClick={() => handleCustomerPOSelect(sale.des)}
+                  >
+                    {sale.des}
+                  </Option>
+                ))}
+              </DropdownOptions>
+            )}
+          </DropdownContainer>
+          <DropdownContainer>
+            <DropdownButton onClick={toggleDropdownPO}>
+              {selectedPO || "Purchase Order"}
+            </DropdownButton>
+            {dropdownOpenPO && (
+              <DropdownOptions>
+                {purchase.map((item) => (
+                  <Option
+                    key={item.id}
+                    onClick={() => handlePOSelect(item.des)}
+                  >
+                    {item.des}
+                  </Option>
+                ))}
+              </DropdownOptions>
+            )}
+          </DropdownContainer>
         </div>
         <ButtonContainer>
           <StyledButton>Search</StyledButton>
         </ButtonContainer>
       </StyledDiv>
-      <StyledTbl>
+
+      <StyledDv>
+        <div className="tables">
+          <h3>Customer PO Details:</h3>
+          <StyledTable className="table table-bordered table-striped table-hover shadow">
+            <thead className="table-secondary">
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sales.map((sale) => (
+                <tr key={sale.id}>
+                  <td>{sale.des}</td>
+                  <td>{sale.qty}</td>
+                  <td>{sale.price.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </StyledTable>
+          <h3>Order Amount: {orderAmount.toFixed(2)}</h3>
+        </div>
         <div>
-          <h3>Sales Order Details</h3>
-          <StyledTdata>
-            <Table>
-              <HeadTr>
-                <Th>Description</Th>
-                <Th>Qty</Th>
-                <Th>Price</Th>
-              </HeadTr>
-              <tbody>
-                {sales.map((sale) => (
-                  <Tr key={sale.id}>
-                    <Td>{sale.des}</Td>
-                    <Td>{sale.qty}</Td>
-                    <Td>{sale.price.toFixed(2)}</Td>
-                  </Tr>
-                ))}
-                
-              </tbody>
-              <h3>Order Amount: {orderAmount.toFixed(2)}</h3>
-            </Table>
-          </StyledTdata>
+          <h3>Purchase Order</h3>
+          <StyledTable className="table table-bordered table-striped table-hover shadow">
+            <thead className="table-secondary">
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {purchase.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.des}</td>
+                  <td>{item.qty}</td>
+                  <td>{item.price.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </StyledTable>
+          <h3>Purchase Amount: {purchaseAmount.toFixed(2)}</h3>
         </div>
-        <div >
-          <h3>Purchase Order Details</h3>
-          <StyledTdata>
-            <Table>
-              <thead>
-                <HeadTr>
-                  <Th>Description</Th>
-                  <Th>Qty</Th>
-                  <Th>Price</Th>
-                </HeadTr>
-              </thead>
-              <tbody>
-                {purchase.map((item) => (
-                  <Tr key={item.id}>
-                    <Td>{item.des}</Td>
-                    <Td>{item.qty}</Td>
-                    <Td>{item.price.toFixed(2)}</Td>
-                  </Tr>
-                ))}
-      
-              </tbody>
-              <h3>Item Cost : {purchaseAmount.toFixed(2)}</h3>
-            </Table>
-          </StyledTdata>
+        <div>
+          <h3>Remaining Purchase Order</h3>
+          <StyledTable className="table table-bordered table-striped table-hover shadow">
+            <thead className="table-secondary">
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rems.map((rem) => (
+                <tr key={rem.id}>
+                  <td>{rem.des}</td>
+                  <td>{rem.qty}</td>
+                  <td>{rem.price.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </StyledTable>
+          <h3>Remaining Purchase: {RemAmount.toFixed(2)}</h3>
         </div>
-      </StyledTbl>
-      <h2>Profit/Loss : {(orderAmount) - (purchaseAmount)}</h2>
+      </StyledDv>
+
+      <h2>Profit/Loss: {(orderAmount - purchaseAmount).toFixed(2)}</h2>
     </>
   );
 }
