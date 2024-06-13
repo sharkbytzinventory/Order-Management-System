@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Modal = styled.div`
   position: relative;
@@ -12,6 +12,7 @@ const Modal = styled.div`
   border-radius: 20px;
   background-color: #f5f8f9;
 `;
+
 const StyledModel = styled.div`
   position: absolute;
   z-index: 100;
@@ -22,19 +23,20 @@ const StyledModel = styled.div`
   background-color: none;
   backdrop-filter: blur(2px);
 `;
+
 function ItemPrice() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    qty:"",
-    date: "",
+    name: '',
+    price: '',
+    qty: '',
+    date: '',
   });
 
   const [data, setData] = useState([
-    { date: "30-Apr-2024",qty:12, price: 40 },
-    { date: "30-Mar-2024",qty:15, price: 39 },
-    { date: "25-Feb-2024",qty:20, price: 35 },
+    { date: '30-Apr-2024', qty: 12, price: 40 },
+    { date: '30-Mar-2024', qty: 15, price: 39 },
+    { date: '25-Feb-2024', qty: 20, price: 35 },
   ]);
 
   const handleInputChange = (event) => {
@@ -51,10 +53,10 @@ function ItemPrice() {
     setData([...data, formData]);
 
     setFormData({
-      name: "",
-      price: "",
-      qty:"",
-      date: "",
+      name: '',
+      price: '',
+      qty: '',
+      date: '',
     });
   };
 
@@ -64,7 +66,7 @@ function ItemPrice() {
     setFormData({
       name: itemToEdit.name,
       price: itemToEdit.price,
-      qty:itemToEdit.qty,
+      qty: itemToEdit.qty,
       date: itemToEdit.date,
     });
   };
@@ -78,98 +80,101 @@ function ItemPrice() {
 
   return (
     <>
-    <StyledModel>
-          <Modal>
-      <form onSubmit={handleSubmit} className="customer-form">
-        <h3 className="form-heading">Add / Edit Item price</h3>
-        <label className="customer-form__label">
-          Item Name:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            className="customer-form__input"
-          />
-        </label>
-        <label className="customer-form__label">
-          Purchase Price:
-          <input
-            type="text"
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            className="customer-form__input"
-          />
-        </label>
-        <label className="customer-form__label">
-          Date:
-          <input
-            type="date"
-            name="date"
-            value={formData.date}
-            onChange={handleInputChange}
-            className="customer-form__input-date"
-          />
-        </label>
-        <label className="customer-form__label">
-          Qty:
-          <input
-            type="text"
-            name="qty"
-            value={formData.qty}
-            onChange={handleInputChange}
-            className="customer-form__input"
-          />
-        </label>
-        <table className="item-price-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Qty</th>
-              <th>Price</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr key={index}>
-                <td>{row.date}</td>
-                <td>{row.qty}</td>
-                <td>{row.price}</td>
-                <td>
-                  <button
-                    className="button-edit-delete"
-                    onClick={() => handleEdit(index)}
-                  >
-                    Edit |
-                  </button>
-                  <button
-                    className="button-edit-delete"
-                    onClick={() => handleDelete(index)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <StyledModel>
+        <Modal>
+          <form onSubmit={handleSubmit} className="customer-form">
+            <h3 className="form-heading">Add / Edit Item price</h3>
+            <label className="customer-form__label">
+              Item Name:
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="customer-form__input"
+              />
+            </label>
+            <label className="customer-form__label">
+              Purchase Price:
+              <input
+                type="text"
+                name="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                className="customer-form__input"
+              />
+            </label>
+            <label className="customer-form__label">
+              Date:
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleInputChange}
+                className="customer-form__input-date"
+              />
+            </label>
+            <label className="customer-form__label">
+              Qty:
+              <input
+                type="text"
+                name="qty"
+                value={formData.qty}
+                onChange={handleInputChange}
+                className="customer-form__input"
+              />
+            </label>
+            <table className="item-price-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((row, index) => (
+                  <tr key={index}>
+                    <td>{row.date}</td>
+                    <td>{row.qty}</td>
+                    <td>{row.price}</td>
+                    <td>
+                      <button
+                        className="button-edit-delete"
+                        onClick={() => handleEdit(index)}
+                      >
+                        Edit |
+                      </button>
+                      <button
+                        className="button-edit-delete"
+                        onClick={() => handleDelete(index)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-        <div className="customer-form__button-container">
-          <button type="submit" className="customer-form__button" >
-            Save
-          </button>
-          <button type="cancel" className="customer-form__button" onClick={() => navigate("/items")}>
-            Cancel
-          </button>
-        </div>
-      </form>
-      </Modal>
+            <div className="customer-form__button-container">
+              <button type="submit" className="customer-form__button">
+                Save
+              </button>
+              <button
+                type="cancel"
+                className="customer-form__button"
+                onClick={() => navigate('/items')}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </Modal>
       </StyledModel>
     </>
   );
 }
 
 export default ItemPrice;
-

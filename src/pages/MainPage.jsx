@@ -65,7 +65,7 @@ function MainPage(){
     <li><StyledNavLink to="/customer"> <FaPeopleCarryBox/> Customer</StyledNavLink></li>
     <li><StyledNavLink to="/suppliers"> <CgNotes/> Suppliers</StyledNavLink></li>
     <li><StyledNavLink to="/items"> <FaPaintBrush/> Items Master</StyledNavLink></li>
-    <li><StyledNavLink to="/sales"> <SiSalesforce/> Sales Order</StyledNavLink></li>
+    <li><StyledNavLink to="/sales"> <SiSalesforce/> Customer PO</StyledNavLink></li>
     <li><StyledNavLink to="/purchaseorder"> <BiPurchaseTag/> Purchase Order</StyledNavLink></li>
     <li><StyledNavLink to="/itemstock"> <FaStore/> Item Stock Master</StyledNavLink></li>
   </NavList>

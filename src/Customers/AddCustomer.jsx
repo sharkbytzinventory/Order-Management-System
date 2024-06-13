@@ -1,18 +1,17 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
-import "./Customer.css";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-//import { useNavigate } from "react-router-dom";
+import "./Customer.css";
+
 const Modal = styled.div`
-  position: relative;
+  position: fixed;
   z-index: 100;
   top: 5%;
   left: 30%;
   border-radius: 20px;
 `;
+
 const StyledModel = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 100;
   width: 100%;
   height: 100vh;
@@ -22,8 +21,9 @@ const StyledModel = styled.div`
   backdrop-filter: blur(3px);
 `;
 
-function AddCustomer({ customers, setCustomers }) {
+function AddCustomer({ customers, closeModal, editingCustomer, updateCustomerList }) {
   const initialData = {
+    id: null,
     name: "",
     email: "",
     phone: "",
@@ -31,10 +31,19 @@ function AddCustomer({ customers, setCustomers }) {
     area: "",
     city: "",
     status: "",
+    gstn: "",
   };
+
   const [formData, setFormData] = useState({ ...initialData });
   const [showForm, setShowForm] = useState(true);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (editingCustomer) {
+      setFormData(editingCustomer);
+    } else {
+      setFormData({ ...initialData });
+    }
+  }, [editingCustomer]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -45,16 +54,19 @@ function AddCustomer({ customers, setCustomers }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCustomers([...customers, formData]);
-
-    setFormData({ ...initialData });
-    console.log(formData);
-    setShowForm((show)=>!show);
+    if (editingCustomer) {
+      updateCustomerList(formData);
+    } else {
+      formData.id = customers.length + 1; // Generate a new id
+      updateCustomerList(formData);
+    }
+    setShowForm((show) => !show);
+    closeModal();
   };
 
   const handleCancel = (e) => {
     e.preventDefault();
-    setFormData({ ...initialData });
+    closeModal();
   };
 
   return (
@@ -63,7 +75,7 @@ function AddCustomer({ customers, setCustomers }) {
         <StyledModel>
           <Modal>
             <form onSubmit={handleSubmit} className="customer-form">
-              <h3 className="form-heading">Add/Edit Customer</h3>
+              <h3 className="form-heading">{editingCustomer ? "Edit Customer" : "Add Customer"}</h3>
               <label className="customer-form__label">
                 Name:
                 <input
@@ -72,6 +84,7 @@ function AddCustomer({ customers, setCustomers }) {
                   value={formData.name}
                   onChange={handleInputChange}
                   className="customer-form__input"
+                  required
                 />
               </label>
               <label className="customer-form__label">
@@ -82,6 +95,7 @@ function AddCustomer({ customers, setCustomers }) {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="customer-form__input"
+                  required
                 />
               </label>
               <label className="customer-form__label">
@@ -92,6 +106,7 @@ function AddCustomer({ customers, setCustomers }) {
                   value={formData.phone}
                   onChange={handleInputChange}
                   className="customer-form__input"
+                  required
                 />
               </label>
               <label className="customer-form__label">
@@ -134,18 +149,21 @@ function AddCustomer({ customers, setCustomers }) {
                   className="customer-form__input"
                 />
               </label>
+              <label className="customer-form__label">
+                GSTN:
+                <input
+                  type="text"
+                  name="gstn"
+                  value={formData.gstn}
+                  onChange={handleInputChange}
+                  className="customer-form__input"
+                />
+              </label>
               <div className="customer-form__button-container">
-                <button
-                  type="submit"
-                  value="submit"
-                  className="customer-form__button"
-                >
+                <button type="submit" value="submit" className="customer-form__button">
                   Save
                 </button>
-                <button
-                  onClick={()=> navigate("/customer")}
-                  className="customer-form__button"
-                >
+                <button type="button" onClick={handleCancel} className="customer-form__button">
                   Cancel
                 </button>
               </div>

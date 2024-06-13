@@ -136,6 +136,16 @@ function AddSuppliers({ suppliers, setSuppliers}) {
                   className="customer-form__input"
                 />
               </label>
+              <label className="customer-form__label">
+                GSTN:
+                <input
+                  type="text"
+                  name="gstn"
+                  value={formData.gstn}
+                  onChange={handleInputChange}
+                  className="customer-form__input"
+                />
+              </label>
               <div className="customer-form__button-container">
                 <button
                   type="submit"

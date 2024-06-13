@@ -5,21 +5,17 @@ function Navbar() {
   return (
     <>
       <div className="navbr">
-        <div>
         <Link to="/" style={{ textDecoration: "none" }}>
           <h2 className="logo">
             <span className="span">
-             <IoMdHome/>
+              <IoMdHome />
             </span>
-            Order Mangement
+            Order Management
           </h2>
         </Link>
-        </div>
-        <div>
         <nav>
           <Link to="/login">Login</Link>
         </nav>
-        </div>
       </div>
     </>
   );

@@ -140,9 +140,9 @@ function Dashboard() {
       <StyledDiv>
         <div>
           <StyledSelect value="customer name">
-            <option>Customer 1</option>
-            <option>Customer 2</option>
-            <option>Customer 3</option>
+            <option>Admin</option>
+            <option>Test</option>
+            
           </StyledSelect>
           <StyledLabel htmlFor="orderDate">Order Date:</StyledLabel>
           <StyledInput

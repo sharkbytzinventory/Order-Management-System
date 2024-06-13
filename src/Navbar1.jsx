@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Navbar1() {
   return (
     <>
-      <div className="navbar" style={{position:"inherit"}}>
+      <div className="navbar" >
         <div>
         <Link to="/" style={{ textDecoration: "none" }}>
           <h2 className="logo">
@@ -12,6 +12,9 @@ function Navbar1() {
             </span>
             Order Mangement
           </h2>
+          <nav >
+          
+        </nav>
         </Link>
         </div>
         <div className="logout">

@@ -32,6 +32,7 @@
   padding: 1.2rem 0.5rem;
   margin-top: 0.8rem;
   background-color: rgb(223, 237, 241);
+  
 }
 
 .form-group {
@@ -68,4 +69,14 @@ input {
 
 .cancel {
   background-color: rgb(92, 92, 228);
+}
+
+.mainpage {
+  border: 1px solid balck;
+  height: "75vh";
+  width: "90%"
+  
+}
+.imgdiv {
+
 }

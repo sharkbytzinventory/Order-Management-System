@@ -25,7 +25,9 @@ function ForgotPassword() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
+              style={{ maxWidth: "calc(20% - 15px)" }}
             />
+            <br/>
             <button type="submit">Submit</button>
           </>
         ) : (

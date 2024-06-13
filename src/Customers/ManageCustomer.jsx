@@ -1,12 +1,21 @@
 import { useState } from "react";
-//import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AddCustomer from "./AddCustomer";
+import { BiSolidEdit } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
 
 const StyledDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  
+`;
+
+const StyledIn = styled.input`
+  width: 200px;
+  height: 45px;
+  margin-top: 20px;
+  
 `;
 
 const StyledSelect = styled.select`
@@ -14,13 +23,14 @@ const StyledSelect = styled.select`
   height: 40px;
   background-color: white;
   color: #333;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   font-size: 16px;
   border: none;
   border-radius: 5px;
   margin: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
+
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
@@ -32,8 +42,10 @@ const StyledButton = styled.button`
   font-size: 16px;
   color: #ffffff;
   background-color: #4e647b;
+  margin-top: 15px;
+  height: 50px;
   border: none;
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -47,192 +59,216 @@ const StyledButton = styled.button`
   }
 `;
 
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
+const DropdownContainer = styled.div`
+  position: relative;
 `;
 
-const Th = styled.th`
-  border: 1px solid #ddd;
-  padding: 8px;
+const DropdownButton = styled.button`
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  color: #333;
+  padding-left: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: left;
-`;
+  cursor: pointer;
 
-const Td = styled.td`
-  border: 1px solid #ddd;
-  padding: 8px;
-`;
-
-const Tr = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
+  &:focus {
+    outline: none;
   }
 `;
 
-const HeadTr = styled(Tr)`
-  background-color: #5c9c5e;
-  color: white;
+const DropdownOptions = styled.div`
+  position: absolute;
+  width: 200px;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 `;
+
+const Option = styled.div`
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
 function ManageCustomer() {
   const [customers, setCustomers] = useState([
     {
       id: 1,
-      name: "hanu",
-      email: "prakash@gmail.com",
-      phone: 123456789,
-      area: "ahm",
+      name: "Admin",
+      email: "admin@gmail.com",
+      phone: 1234567890,
+      area: "Ahmedabd",
       status: "active",
     },
     {
       id: 2,
-      name: "ravi",
-      email: "ravi@gmail.com",
-      phone: 9876543210,
-      area: "ahm",
+      name: "Test",
+      email: "test@gmail.com",
+      phone: 1579599989,
+      area: "Gnadhinagar",
+      status: "inactive",
+    },
+    {
+      id: 3,
+      name: "User",
+      email: "user@gmail.com",
+      phone: 1122334455,
+      area: "Ahmedabad",
       status: "active",
     },
+
   ]);
 
-  const [searchTerm, setSearchTerm] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showModal, setShowModal] = useState("");
   const [editingCustomer, setEditingCustomer] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   const handleSearch = () => {
     const filteredCustomers = customers.filter((customer) =>
       customer.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
+    // Update the state with filtered customers
     setCustomers(filteredCustomers);
   };
-
-  const handleEdit = (customer) => {
-    setEditingCustomer({...customer});
-  };
-  
 
   const handleDelete = (id) => {
     const updatedCustomers = customers.filter((customer) => customer.id !== id);
     setCustomers(updatedCustomers);
   };
+
   const handleAddCustomer = () => {
-    setShowModal((show) =>!show);
+    setEditingCustomer(null);
+    setShowModal(true);
   };
-  const handleSave = (id) => {
-    const updatedCustomers = customers.map((cust) =>
-      cust.id === id ? editingCustomer : cust
-    );
-    setCustomers(updatedCustomers);
-    setEditingCustomer(null);  // Reset the editing state
+
+  const handleEditCustomer = (customer) => {
+    setEditingCustomer(customer);
+    setShowModal(true);
   };
-  
-  // const closeModal = () => {
-  //   setShowModal(false);
-  // };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const updateCustomerList = (newCustomer) => {
+    setCustomers((prevCustomers) => {
+      if (editingCustomer) {
+        return prevCustomers.map((customer) =>
+          customer.id === newCustomer.id ? newCustomer : customer
+        );
+      } else {
+        return [...prevCustomers, newCustomer];
+      }
+    });
+    setShowModal(false);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleOptionClick = (option) => {
+    setSearchTerm(option);
+    setDropdownOpen(false);
+  };
+
   return (
     <>
-      <div>
+      <div className="">
         <h1>Manage Customers</h1>
         <StyledDiv>
-          <StyledSelect
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTerm}
-          >
-            {" "}
-            {customers.map((customer) => (
-              <option key={customer.id}>{customer.name}</option>
-            ))}
-          </StyledSelect>
+          <DropdownContainer>
+            <DropdownButton onClick={toggleDropdown}>
+              {searchTerm || "Customer Name"}
+            </DropdownButton>
+            {dropdownOpen && (
+              <DropdownOptions>
+                {customers.map((customer) => (
+                  <Option key={customer.id} onClick={() => handleOptionClick(customer.name)}>
+                    {customer.name}
+                  </Option>
+                ))}
+              </DropdownOptions>
+            )}
+          </DropdownContainer>
           <ButtonContainer>
+            <StyledIn
+              type="text"
+              value={searchTerm}
+              onChange={handleInputChange}
+              placeholder="Search by name..."
+            />
             <StyledButton onClick={handleSearch}>Search</StyledButton>
-            <StyledButton onClick={handleAddCustomer}>
-              Add Customer
-            </StyledButton>
+            <StyledButton onClick={handleAddCustomer}>Add Customer</StyledButton>
           </ButtonContainer>
         </StyledDiv>
 
-        <div>
-          <h3>Customer List:</h3>
-          <Table>
-            <thead>
-              <HeadTr>
-                <Th>Name</Th>
-                <Th>Email</Th>
-                <Th>Phone</Th>
-                <Th>Area</Th>
-                <Th>Status</Th>
-                <Th>Action</Th>
-              </HeadTr>
+        <div className="conentdetails">
+          <h2>Customer List:</h2>
+          <table className="table table-bordered table-striped table-hover shadow mt-5">
+            <thead className="table-secondary">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Area</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
             </thead>
             <tbody>
-  {customers.map((customer) =>
-    editingCustomer && editingCustomer.id === customer.id ? (
-      <Tr key={customer.id}>
-        <Td>
-          <input
-            type="text"
-            value={editingCustomer.name}
-            onChange={(e) => setEditingCustomer({...editingCustomer, name: e.target.value})}
-          />
-        </Td>
-        <Td>
-          <input
-            type="email"
-            value={editingCustomer.email}
-            onChange={(e) => setEditingCustomer({...editingCustomer, email: e.target.value})}
-          />
-        </Td>
-        <Td>
-          <input
-            type="text"
-            value={editingCustomer.phone}
-            onChange={(e) => setEditingCustomer({...editingCustomer, phone: e.target.value})}
-          />
-        </Td>
-        <Td>
-          <input
-            type="text"
-            value={editingCustomer.area}
-            onChange={(e) => setEditingCustomer({...editingCustomer, area: e.target.value})}
-          />
-        </Td>
-        <Td>
-          <select
-            value={editingCustomer.status}
-            onChange={(e) => setEditingCustomer({...editingCustomer, status: e.target.value})}
-          >
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </Td>
-        <Td>
-          <button className="btns" onClick={() => handleSave(customer.id)}> Save | </button>
-          <button className="btns" onClick={() => setEditingCustomer(null)}> Cancel</button>
-        </Td>
-      </Tr>
-    ) : (
-      <Tr key={customer.id}>
-        <Td>{customer.name}</Td>
-        <Td>{customer.email}</Td>
-        <Td>{customer.phone}</Td>
-        <Td>{customer.area}</Td>
-        <Td>{customer.status}</Td>
-        <Td>
-          <button className="btns" onClick={() => handleEdit(customer)}>Edit | </button>
-          <button className="btns" onClick={() => handleDelete(customer.id)}> Delete</button>
-        </Td>
-      </Tr>
-    )
-  )}
-</tbody>
-
-          </Table>
+              {customers.map((customer) => (
+                <tr key={customer.id}>
+                  <td>{customer.name}</td>
+                  <td>{customer.email}</td>
+                  <td>{customer.phone}</td>
+                  <td>{customer.area}</td>
+                  <td>{customer.status}</td>
+                  <td>
+                    <div className="buttons-group">
+                      <button className="btns" onClick={() => handleEditCustomer(customer)}>
+                        <BiSolidEdit />
+                      </button>
+                      <button className="btns" onClick={() => handleDelete(customer.id)}>
+                        <MdDelete />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         {showModal && (
-          <AddCustomer customers={customers} setCustomers={setCustomers} />
+          <AddCustomer
+            customers={customers}
+            setCustomers={setCustomers}
+            closeModal={closeModal}
+            editingCustomer={editingCustomer}
+            updateCustomerList={updateCustomerList}
+          />
         )}
       </div>
     </>
   );
 }
+
 export default ManageCustomer;

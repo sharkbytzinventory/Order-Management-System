@@ -2,6 +2,7 @@ import { useState } from "react";
 //import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AddSuppliers from "./AddSuppliers";
+import { BiEdit, BiTrash } from "react-icons/bi";
 
 
 const StyledDiv = styled.div`
@@ -168,14 +169,14 @@ function ManageSupplier() {
                       className="btns"
                       onClick={() => handleEdit(supplier.id)}
                     >
-                      Edit
+                      <BiEdit />
                     </button>{" "}
                     |
                     <button
                       className="btns"
                       onClick={() => handleDelete(supplier.id)}
                     >
-                      Delete
+                      <BiTrash />
                     </button>
                   </Td>
                 </Tr>
